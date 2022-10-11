@@ -1,10 +1,10 @@
 package sk.ness.academy.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
-@JsonIgnoreProperties(value = { "comments" })
 @Entity
 @Table(name = "articles")
 
@@ -23,19 +23,23 @@ public class Article {
   @Id
   @Column(name = "id", unique = true, nullable = false, precision = 10, scale = 0)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "articles_seq_store")
+
   private Integer id;
 
   @Column(name = "title", length = 250)
   private String title;
 
   @Column(name = "text", length = 2000)
+  @JsonIgnore
   private String text;
 
   @Column(name = "author", length = 250)
+  @JsonIgnore
   private String author;
 
   @Column(name = "create_timestamp")
   @Temporal(TemporalType.TIMESTAMP)
+  @JsonIgnore
   private Date createTimestamp;
 
 
@@ -43,8 +47,9 @@ public class Article {
           cascade = CascadeType.ALL,
           orphanRemoval = true,
           fetch = FetchType.EAGER)
-  private transient List<Comment> comments;
 
+  private  List<Comment> comments;
+//  @JsonIgnore
   public List<Comment> getComments() {
     return comments;
   }

@@ -13,10 +13,10 @@ public class CommentServiceImpl implements CommentService {
     @Resource
     private CommentDAO commentDAO;
 
-    @Override
-    public void updateArticleComment(Comment comment, Integer articleId) {
-        this.commentDAO.updateArticleComment(comment,articleId);
-    }
+//    @Override
+//    public void updateArticleComment(Comment comment, Integer articleId) {
+//        this.commentDAO.updateArticleComment(comment,articleId);
+//    }
 
     @Override
     public void createArticleComment(Comment comment, Integer articleId) {

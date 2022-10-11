@@ -2,6 +2,7 @@ package sk.ness.academy.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hsqldb.HsqlException;
 import org.springframework.stereotype.Repository;
 import sk.ness.academy.domain.Article;
@@ -37,13 +38,19 @@ public class CommentHibernateDAO implements CommentDAO {
     public void delete(Integer commentId) {
 
     }
-    @Override
-    public  void updateArticleComment(Comment comment,Integer articleId) {
-       Article a =this.sessionFactory.getCurrentSession().load(Article.class,articleId);
-       if (a!=null) {
-           this.sessionFactory.getCurrentSession().saveOrUpdate(comment);
-       }
-    }
+//    @Override
+//    public  void updateArticleComment(Comment comment,Integer articleId) {
+//       Article a =this.sessionFactory.getCurrentSession().load(Article.class,articleId);
+//        Transaction t=null;
+//       if (a!=null) {
+//           t=this.sessionFactory.getCurrentSession().getTransaction();
+//           Comment c=this.sessionFactory.getCurrentSession().load(Comment.class,articleId);
+//           c.setAuthor(comment.getAuthor());
+//           c.setText(comment.getText());
+//           c.setCreateTimestamp(c.getCreateTimestamp());
+//           t.commit();
+//       }
+//    }
 
     @Override
     public  void createArticleComment(Comment comment,Integer articleId) {
