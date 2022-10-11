@@ -1,5 +1,7 @@
 package sk.ness.academy.dao;
 
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -41,13 +43,15 @@ public class ArticleHibernateDAO implements ArticleDAO {
     session.flush() ;
 
   }
- public void updateArticleComment(Integer articleId) {
-   Session session ;
-   session=this.sessionFactory.getCurrentSession();
-   Article a = this.sessionFactory.getCurrentSession().load(Article.class, articleId);
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Article> searchText(String searchText) {
 
 
- }
+    return this.sessionFactory.getCurrentSession().createSQLQuery("select * from articles where title like '%" +searchText + "%' OR text like '%" +searchText + "%' OR author like '%'" +searchText + "'%'").addEntity(Article.class).list();
+
+  }
 
 
 }

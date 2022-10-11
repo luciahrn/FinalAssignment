@@ -19,5 +19,6 @@ public interface ArticleDAO {
 	/** Deletes Article by ArticleId from Database */
 	  void deleteArticleById(Integer articleId);
 
-	void updateArticleComment(Integer articleId);
+
+	List<Article> searchText(String searchText);
 	}

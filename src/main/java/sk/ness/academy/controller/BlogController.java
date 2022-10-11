@@ -28,7 +28,7 @@ public class BlogController {
   private AuthorService authorService;
 
   @Resource
-  private CommentService commentServiceService;
+  private CommentService commentService;
 
   // ~~ Article
   @RequestMapping(value = "articles", method = RequestMethod.GET)
@@ -44,7 +44,7 @@ public class BlogController {
 
   @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
   public List<Article> searchArticle(@PathVariable final String searchText) {
-	  throw new UnsupportedOperationException("Full text search not implemented.");
+    return this.articleService.searchText(searchText);
   }
 
   @RequestMapping(value = "articles", method = RequestMethod.PUT)
@@ -62,7 +62,7 @@ public class BlogController {
 
   @RequestMapping(value = "authors/stats", method = RequestMethod.GET)
   public List<AuthorStats> authorStats() {
-	  throw new UnsupportedOperationException("Author statistics not implemented.");
+	  return this.authorService.getAllAuthorsWithStats();
   }
 
 
@@ -74,8 +74,24 @@ public class BlogController {
   //2.a create comment for existing article
   @RequestMapping(value = "articles/{articleId}", method = RequestMethod.PUT)
   public void updateArticleComment(@RequestBody final Comment comment, @PathVariable("articleId") Integer articleId) {
-      this.commentServiceService.updateArticleComment(comment,articleId);
+      this.commentService.updateArticleComment(comment,articleId);
   }
+
+  @RequestMapping(value = "articles/{articleId}", method = RequestMethod.POST)
+  public void createArticleComment(@RequestBody final Comment comment, @PathVariable("articleId") Integer articleId) {
+    this.commentService.createArticleComment(comment,articleId);
+  }
+
+  @RequestMapping(value = "articles/{articleId}/comments/{commentId}", method = RequestMethod.GET)
+  public Comment getArticleComment(@PathVariable("articleId") Integer articleId,@PathVariable("commentId") Integer commentId) {
+    return this.commentService.getArticleComment(commentId,articleId);
+  }
+
+  @RequestMapping(value = "articles/{articleId}/comments/{commentId}", method = RequestMethod.DELETE)
+  public void deleteArticleComment(@PathVariable("articleId") Integer articleId,@PathVariable("commentId") Integer commentId) {
+     this.commentService.deleteArticleComment(commentId,articleId);
+  }
+
 
 
 }

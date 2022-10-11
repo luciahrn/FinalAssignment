@@ -20,6 +20,7 @@ public interface ArticleService {
 	  void ingestArticles(String jsonArticles);
 
 	  void deleteArticleById(Integer ArticleId);
+	List<Article> searchText(String searchText);
 
 
 }

@@ -1,6 +1,8 @@
 package sk.ness.academy.dto;
 
-public class AuthorStats {
+import java.io.Serializable;
+
+public class AuthorStats implements Serializable {
 
 	  private String authorName;
 	  private Integer articleCount;
