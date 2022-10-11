@@ -1,13 +1,14 @@
 package sk.ness.academy.dao;
 
-import java.sql.PreparedStatement;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Repository;
 
 import sk.ness.academy.domain.Article;
@@ -26,7 +27,9 @@ public class ArticleHibernateDAO implements ArticleDAO {
   @SuppressWarnings("unchecked")
   @Override
   public List<Article> findAll() {
+    System.err.println("som tu");
     return this.sessionFactory.getCurrentSession().createSQLQuery("select * from articles").addEntity(Article.class).list();
+
   }
 
   @Override
@@ -51,6 +54,42 @@ public class ArticleHibernateDAO implements ArticleDAO {
 
     return this.sessionFactory.getCurrentSession().createSQLQuery("select * from articles where title like '%" +searchText + "%' OR text like '%" +searchText + "%' OR author like '%'" +searchText + "'%'").addEntity(Article.class).list();
 
+  }
+
+  @Override
+  public void ingestArticles(String jsonArticles) {
+    JSONParser parser = new JSONParser();
+    Session session = this.sessionFactory.getCurrentSession();
+
+    try {
+      // Parse JSON string using JSON parser.
+      Object object = parser.parse(jsonArticles);
+      JSONArray array = (JSONArray) object;
+      System.out.println("First object:");
+      System.out.println(array.get(0));
+      // Get JSON object from JSON array.
+      JSONObject jsonObject = (JSONObject) array.get(1);
+      System.out.println("Second object:");
+      System.out.println("Name:" + jsonObject.get("author"));
+
+      for (int i=0;i<array.size();i++) {
+        JSONObject jsonObj = (JSONObject) array.get(i);
+
+
+        Article a = new Article();
+        a.setAuthor((String) jsonObj.get("author"));
+        a.setText((String) jsonObj.get("text"));
+        a.setTitle((String) jsonObj.get("title"));
+        session.save(a);
+
+
+
+      }
+
+
+    } catch (org.json.simple.parser.ParseException e) {
+      e.printStackTrace();
+    }
   }
 
 

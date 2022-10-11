@@ -1,12 +1,13 @@
 package sk.ness.academy.domain;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import javax.persistence.*;
 
+import javax.persistence.*;
+@JsonIgnoreProperties(value = { "comments" })
 @Entity
 @Table(name = "articles")
+
 @SequenceGenerator(name = "articles_seq_store", sequenceName = "article_seq", allocationSize = 1)
 public class Article {
 
@@ -37,11 +38,12 @@ public class Article {
   @Temporal(TemporalType.TIMESTAMP)
   private Date createTimestamp;
 
+
   @OneToMany(
           cascade = CascadeType.ALL,
           orphanRemoval = true,
           fetch = FetchType.EAGER)
-  private List<Comment> comments;
+  private transient List<Comment> comments;
 
   public List<Comment> getComments() {
     return comments;
