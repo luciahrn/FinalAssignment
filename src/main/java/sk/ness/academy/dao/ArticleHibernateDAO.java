@@ -1,6 +1,6 @@
 package sk.ness.academy.dao;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,11 +14,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Repository;
-
 import sk.ness.academy.domain.Article;
-import sk.ness.academy.domain.Comment;
 import sk.ness.academy.dto.ArticleDto;
-import sk.ness.academy.dto.AuthorStats;
+
 
 @Repository
 public class ArticleHibernateDAO implements ArticleDAO {
@@ -37,7 +35,6 @@ public class ArticleHibernateDAO implements ArticleDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Article> findAll() {
-//    return this.sessionFactory.getCurrentSession().createSQLQuery("select articles.title from articles").addEntity(Article.class).list();
         return this.sessionFactory.getCurrentSession().createSQLQuery("SELECT  a.id as id,a.title as title FROM articles a ")
                 .addScalar("id", StandardBasicTypes.INTEGER)
 
@@ -49,6 +46,7 @@ public class ArticleHibernateDAO implements ArticleDAO {
     @Override
     public void persist(final Article article) {
         this.sessionFactory.getCurrentSession().saveOrUpdate(article);
+
     }
 
     @Override

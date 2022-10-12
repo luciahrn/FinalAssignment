@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import sk.ness.academy.config.DatabaseConfig;
 
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)

@@ -17,7 +17,7 @@ public interface CommentDAO {
 
     /** Deletes by id */
     void delete(Integer commentId);
-//    void updateArticleComment(Comment comment,Integer articleId);
+
     void createArticleComment(Comment comment,Integer articleId);
     Comment getArticleComment(Integer commentId, Integer articleId);
     void deleteArticleComment(Integer commentId, Integer articleId);

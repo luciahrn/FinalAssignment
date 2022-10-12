@@ -5,12 +5,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import javax.transaction.Transactional;
-
-
- import org.json.simple.parser.JSONParser;
-import org.apache.tomcat.util.json.ParseException;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import sk.ness.academy.dao.ArticleDAO;

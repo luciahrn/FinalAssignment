@@ -1,6 +1,6 @@
 package sk.ness.academy.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 import java.util.List;
 
@@ -30,11 +30,11 @@ public class Article {
   private String title;
 
   @Column(name = "text", length = 2000)
-  @JsonIgnore
+
   private String text;
 
   @Column(name = "author", length = 250)
-  @JsonIgnore
+
   private String author;
 
   @Column(name = "create_timestamp")

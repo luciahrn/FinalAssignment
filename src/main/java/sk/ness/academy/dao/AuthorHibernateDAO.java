@@ -3,13 +3,11 @@ package sk.ness.academy.dao;
 import java.util.List;
 
 import javax.annotation.Resource;
-
 import org.hibernate.SessionFactory;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.type.StandardBasicTypes;
 import org.hibernate.type.StringType;
 import org.springframework.stereotype.Repository;
-
 import sk.ness.academy.dto.Author;
 import sk.ness.academy.dto.AuthorStats;
 

@@ -34,35 +34,35 @@ public class BlogController {
 
     // ~~ Article
     @RequestMapping(value = "articles", method = RequestMethod.GET)
-    public ResponseEntity getAllArticles() {
+    public List<Article> getAllArticles() {
+        try {
+            return this.articleService.findAll();
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Articles could not be found");
 
-
-        if (this.articleService.findAll().isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Articles not found");
-        } else {
-            return new ResponseEntity<>(this.articleService.findAll(), HttpStatus.OK);
         }
+
     }
 
     @RequestMapping(value = "articles/{articleId}", method = RequestMethod.GET)
-    public ResponseEntity getArticle(@PathVariable final Integer articleId) {
-        if (this.articleService.findByID(articleId) == null) {
+    public Article getArticle(@PathVariable final Integer articleId) {
+        try {
+            return this.articleService.findByID(articleId);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be found");
 
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("Article not found");
-        } else {
-            return new ResponseEntity<>(this.articleService.findByID(articleId), HttpStatus.OK);
         }
-
-
     }
+
 
     @RequestMapping(value = "articles/search/{searchText}", method = RequestMethod.GET)
     public List<Article> searchArticle(@PathVariable final String searchText) {
-        return this.articleService.searchText(searchText);
+        try {
+            return this.articleService.searchText(searchText);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Articles could not be found");
+
+        }
     }
 
     @RequestMapping(value = "articles", method = RequestMethod.PUT)
@@ -80,12 +80,23 @@ public class BlogController {
     // ~~ Author
     @RequestMapping(value = "authors", method = RequestMethod.GET)
     public List<Author> getAllAuthors() {
-        return this.authorService.findAll();
+        try {
+            return this.authorService.findAll();
+        }catch (Exception e ) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be added");
+
+        }
+
     }
 
     @RequestMapping(value = "authors/stats", method = RequestMethod.GET)
     public List<AuthorStats> authorStats() {
-        return this.authorService.getAllAuthorsWithStats();
+        try {
+            return this.authorService.getAllAuthorsWithStats();
+        }catch (Exception e ) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be added");
+
+        }
     }
 
 
@@ -102,21 +113,22 @@ public class BlogController {
     }
 
 
-
     @RequestMapping(value = "articles/{articleId}", method = RequestMethod.PUT)
-    public void createArticleComment(@RequestBody final Comment comment, @PathVariable("articleId") Integer articleId) {
+    public void createArticleComment(@RequestBody final Comment comment,
+                                     @PathVariable("articleId") Integer articleId) {
 
         try {
             this.commentService.createArticleComment(comment, articleId);
         } catch (Exception e) {
-            System.err.println("nhby"+e);
+            System.err.println("nhby" + e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Comment could not be added");
 
         }
     }
 
     @RequestMapping(value = "articles/{articleId}/comments/{commentId}", method = RequestMethod.GET)
-    public ResponseEntity getArticleComment(@PathVariable("articleId") Integer articleId, @PathVariable("commentId") Integer commentId) {
+    public ResponseEntity getArticleComment(@PathVariable("articleId") Integer
+                                                    articleId, @PathVariable("commentId") Integer commentId) {
 
         if (this.commentService.getArticleComment(commentId, articleId) == null) {
 
@@ -124,15 +136,17 @@ public class BlogController {
                     .status(HttpStatus.NOT_FOUND)
                     .body("Article not found");
         } else {
-            return new ResponseEntity<>(this.commentService.getArticleComment(commentId, articleId) , HttpStatus.OK);
+            return new ResponseEntity<>(this.commentService.getArticleComment(commentId, articleId), HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "articles/{articleId}/comments/{commentId}", method = RequestMethod.DELETE)
-    public void deleteArticleComment(@PathVariable("articleId") Integer articleId, @PathVariable("commentId") Integer commentId) {
+    public void deleteArticleComment(@PathVariable("articleId") Integer
+                                             articleId, @PathVariable("commentId") Integer commentId) {
 
         try {
-            this.commentService.deleteArticleComment(commentId, articleId);        } catch (Exception e) {
+            this.commentService.deleteArticleComment(commentId, articleId);
+        } catch (Exception e) {
 
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Comment could not be deleted");
 

@@ -2,7 +2,7 @@ package sk.ness.academy.dao;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.PathVariable;
+
 import sk.ness.academy.domain.Article;
 
 public interface ArticleDAO {

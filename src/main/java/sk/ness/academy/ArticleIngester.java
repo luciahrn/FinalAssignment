@@ -1,27 +1,19 @@
 package sk.ness.academy;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.tomcat.util.json.JSONParser;
-import org.json.simple.JSONObject;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-
 import sk.ness.academy.config.DatabaseConfig;
-import sk.ness.academy.domain.Article;
 import sk.ness.academy.service.ArticleService;
-
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;
+
 
 
 @Configuration
@@ -54,8 +46,6 @@ public class ArticleIngester {
       } finally {
         reader.close();
       }
-
-
 
       articleService.ingestArticles(json);
     }
