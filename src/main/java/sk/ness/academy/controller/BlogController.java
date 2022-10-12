@@ -83,7 +83,7 @@ public class BlogController {
         try {
             return this.authorService.findAll();
         }catch (Exception e ) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be added");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be found");
 
         }
 
@@ -94,7 +94,7 @@ public class BlogController {
         try {
             return this.authorService.getAllAuthorsWithStats();
         }catch (Exception e ) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Article could not be added");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Articles could not be found");
 
         }
     }
